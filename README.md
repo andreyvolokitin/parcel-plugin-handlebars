@@ -1,11 +1,16 @@
-# @native_finance/parcel-plugin-handlebars
+# @layflags/parcel-plugin-handlebars
 
-[![npm](https://img.shields.io/npm/v/@native_finance/parcel-plugin-handlebars.svg)](https://www.npmjs.com/package/@native_finance/parcel-plugin-handlebars)
+[![npm](https://img.shields.io/npm/v/@layflags/parcel-plugin-handlebars.svg)](https://www.npmjs.com/package/@layflags/parcel-plugin-handlebars)
+
+**Where to find the code**
+
+in the `npm` branch: https://github.com/layflags/parcel-plugin-handlebars/tree/npm
 
 **Update:**
 
-- Updated dependacies removed peer dependacies
-- Fixed parcel watch and cache issue.
+- Fix `parseSimpleLayout`
+- Updated dependencies removed peer dependencies
+- Fixed parcel watch and cache issue
 
 ```js
 module.exports = {
