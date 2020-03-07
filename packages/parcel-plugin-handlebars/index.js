@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------- */
 
 module.exports = bundler => {
-  bundler.addAssetType('hbs', require.resolve('./lib/HbsAsset'))
-  bundler.addAssetType('handlebars', require.resolve('./lib/HbsAsset'))
-  bundler.addAssetType('html', require.resolve('./lib/HbsAsset'))
+  bundler.addAssetType('hbs', require.resolve('./lib/handlebars-asset'))
+  bundler.addAssetType('handlebars', require.resolve('./lib/handlebars-asset'))
+  bundler.addAssetType('html', require.resolve('./lib/handlebars-asset'))
 }
