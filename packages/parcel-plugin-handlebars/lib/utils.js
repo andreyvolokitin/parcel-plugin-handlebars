@@ -1,33 +1,40 @@
+'use strict'
+
+/* -----------------------------------------------------------------------------
+ * dependencies
+ * -------------------------------------------------------------------------- */
+
+// core
 const fs = require('fs')
 const path = require('path')
+
+/* -----------------------------------------------------------------------------
+ * utils
+ * -------------------------------------------------------------------------- */
 
 function loadUserConfig () {
   const file = path.resolve(process.cwd(), 'handlebars.config.js')
   const flavors = [
-    file, // handlebars.config.js
-    file.replace('.js', '.json'), // handlebars.config.json
-    file.replace('handlebars.', 'hbs.'), // hbs.config.js
-    file.replace('handlebars.', 'hbs.').replace('.js', '.json') // hbs.config.json
+    file,
+    file.replace('.js', '.json'),
+    file.replace('handlebars.', 'hbs.'),
+    file.replace('handlebars.', 'hbs.').replace('.js', '.json')
   ]
 
   if (fs.existsSync(flavors[0])) {
-    // eslint-disable-line no-sync
-    return require(flavors[0]) // eslint-disable-line global-require
+    return require(flavors[0])
   }
 
   if (fs.existsSync(flavors[1])) {
-    // eslint-disable-line no-sync
-    return JSON.parse(fs.readFileSync(flavors[1], { encoding: 'utf-8' })) // eslint-disable-line no-sync
+    return JSON.parse(fs.readFileSync(flavors[1], { encoding: 'utf-8' }))
   }
 
   if (fs.existsSync(flavors[2])) {
-    // eslint-disable-line no-sync
-    return require(flavors[2]) // eslint-disable-line global-require
+    return require(flavors[2])
   }
 
   if (fs.existsSync(flavors[3])) {
-    // eslint-disable-line no-sync
-    return JSON.parse(fs.readFileSync(flavors[3], { encoding: 'utf-8' })) // eslint-disable-line no-sync
+    return JSON.parse(fs.readFileSync(flavors[3], { encoding: 'utf-8' }))
   }
 
   return {}
@@ -47,8 +54,7 @@ const parseSimpleLayout = (str, opts) => {
     const hbsLayout = path.resolve(process.cwd(), `${layout}.hbs`)
 
     if (fs.existsSync(hbsLayout)) {
-      // eslint-disable-line no-sync
-      const content = fs.readFileSync(hbsLayout, { encoding: 'utf-8' }) // eslint-disable-line no-sync
+      const content = fs.readFileSync(hbsLayout, { encoding: 'utf-8' })
       return content.replace('{{{body}}}', {
         dependencies: [hbsLayout],
         content: str
@@ -58,8 +64,7 @@ const parseSimpleLayout = (str, opts) => {
     const handlebarsLayout = hbsLayout.replace('.hbs', '.handlebars')
 
     if (fs.existsSync(handlebarsLayout)) {
-      // eslint-disable-line no-sync
-      const content = fs.readFileSync(handlebarsLayout, { encoding: 'utf-8' }) // eslint-disable-line no-sync
+      const content = fs.readFileSync(handlebarsLayout, { encoding: 'utf-8' })
       return content.replace('{{{body}}}', {
         dependencies: [handlebarsLayout],
         content: str

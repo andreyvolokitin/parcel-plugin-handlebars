@@ -1,11 +1,24 @@
+'use strict'
+
+/* -----------------------------------------------------------------------------
+ * dependencies
+ * -------------------------------------------------------------------------- */
+
+// 3rd party
 const frontMatter = require('front-matter')
 const Handlebars = require('handlebars')
 const handlebarsWax = require('handlebars-wax')
 const handlebarsLayouts = require('handlebars-layouts')
 const handlebarsHelpersPackage = require('handlebars-helpers')
 const HTMLAsset = require('parcel-bundler/src/assets/HTMLAsset')
-const { loadUserConfig, parseSimpleLayout } = require('./utils')
 const glob = require('globby')
+
+// lib
+const { loadUserConfig, parseSimpleLayout } = require('./utils')
+
+/* -----------------------------------------------------------------------------
+ * HbsAsset
+ * -------------------------------------------------------------------------- */
 
 const userConfig = loadUserConfig()
 const config = Object.assign(
