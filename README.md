@@ -5,7 +5,7 @@
 **Originally Forked From:**
 https://github.com/native-finance/parcel-plugin-handlebars#readme
 
-***
+---
 
 ## parcel-plugin-handlebars
 
@@ -24,13 +24,13 @@ https://github.com/native-finance/parcel-plugin-handlebars#readme
 Install with [npm](https://www.npmjs.com/):
 
 ```bash
-npm install --save parcel-plugin-handlebars
+npm install --saveDev @inventory/parcel-plugin-handlebars
 ```
 
 Install with [yarn](https://yarnpkg.com):
 
 ```bash
-yarn add parcel-plugin-handlebars
+yarn add @inventory/parcel-plugin-handlebars --dev
 ```
 
 The plugin will process any templated handlebars file extensions (.hbs, .handlebars and .html)
@@ -41,24 +41,25 @@ The plugin has the following config defaults. These are required for handlebars 
 
 ```js
 module.exports = {
-  data: 'src/markup/data',
-  decorators: 'src/markup/decorators',
-  helpers: 'src/markup/helpers',
-  layouts: 'src/markup/layouts',
-  partials: 'src/markup/partials',
+  data: "src/markup/data/**/*.{json,js}",
+  decorators: "src/markup/decorators/**/*.js",
+  helpers: "src/markup/helpers/**/*.js",
+  layouts: "src/markup/layouts/**/*.{hbs,handlebars,js}",
+  partials: "src/markup/partials/**/*.{hbs,handlebars,js}"
 };
 ```
 
 ### Custom Configuration
 
-If you would like to enforce your own folder structure simply create  `handlebars.config.js` or `hbs.config.js` in your project root.
+If you would like to enforce your own folder structure simply create `handlebars.config.js` or `hbs.config.js` in your project root.
 
 ```js
 module.exports = {
-  data: 'views/json',
-  helpers: 'views/tools',
-  layouts: 'views/templates',
-  partials: 'views/partials',
+  data: "views/data/**/*.{json,js}",
+  decorators: "views/decorators/**/*.js",
+  helpers: "views/helpers/**/*.js",
+  layouts: "views/layouts/**/*.{hbs,handlebars,js}",
+  partials: "views/partials/**/*.{hbs,handlebars,js}"
 };
 ```
 
@@ -79,14 +80,15 @@ names:
   - jane
   - mark
 ---
+
 {{!< mainlayout}}
 
 <h1>{{title}}</h1>
 <p>{{desc}}</p>
 <ul>
-{{#each names}}
+  {{#each names}}
   <li>{{this}}</li>
-{{/each}}
+  {{/each}}
 </ul>
 ```
 
@@ -127,11 +129,18 @@ This can be useful when you want specific code to show up on production builds.
 ```html
 {{#eq NODE_ENV "production"}}
 <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-XXXX');</script>
+<script>
+  (function(w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-XXXX");
+</script>
 <!-- End Google Tag Manager -->
 {{/eq}}
 ```

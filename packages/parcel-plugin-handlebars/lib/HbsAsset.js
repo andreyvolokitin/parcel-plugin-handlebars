@@ -17,38 +17,34 @@ const glob = require('globby')
 const { loadUserConfig } = require('./utils')
 
 /* -----------------------------------------------------------------------------
+ * configure handlebars/handlebars-wax
+ * -------------------------------------------------------------------------- */
+
+const handlebars = Handlebars.create()
+handlebarsHelpersPackage({ handlebars })
+
+const config = {
+  data: 'src/markup/data/**/*.{json,js}',
+  decorators: 'src/markup/decorators/**/*.js',
+  helpers: 'src/markup/helpers/**/*.js',
+  layouts: 'src/markup/layouts/**/*.{hbs,handlebars,js}',
+  partials: 'src/markup/partials/**/*.{hbs,handlebars,js}',
+  ...loadUserConfig()
+}
+
+const wax = handlebarsWax(handlebars)
+  .helpers(handlebarsLayouts)
+  .helpers(config.helpers)
+  .data(config.data)
+  .decorators(config.decorators)
+  .partials(config.layouts)
+  .partials(config.partials)
+
+/* -----------------------------------------------------------------------------
  * HbsAsset
  * -------------------------------------------------------------------------- */
 
-const userConfig = loadUserConfig()
-const config = Object.assign(
-  {},
-  {
-    data: 'src/markup/data',
-    decorators: 'src/markup/decorators',
-    helpers: 'src/markup/helpers',
-    layouts: 'src/markup/layouts',
-    partials: 'src/markup/partials'
-  },
-  userConfig
-)
-
 class HbsAsset extends HTMLAsset {
-  constructor (name, pkg, options) {
-    super(name, pkg, options)
-
-    const handlebars = Handlebars.create()
-    handlebarsHelpersPackage({ handlebars })
-
-    this.wax = handlebarsWax(handlebars)
-      .helpers(handlebarsLayouts)
-      .helpers(`${config.helpers}/**/*.js`)
-      .data(`${config.data}/**/*.{json,js}`)
-      .decorators(`${config.decorators}/**/*.js`)
-      .partials(`${config.layouts}/**/*.{hbs,handlebars,js}`)
-      .partials(`${config.partials}/**/*.{hbs,handlebars,js}`)
-  }
-
   processSingleDependency (path, opts) {
     if (path) {
       return super.processSingleDependency(path, opts)
@@ -56,33 +52,14 @@ class HbsAsset extends HTMLAsset {
   }
 
   parse (code) {
-    // process any frontmatter yaml in the template file
-    const frontmatter = frontMatter(code)
+    glob
+      .sync(Object.values(config))
+      .forEach(path => this.addDependency(path, { includedInParent: true }))
 
-    const helpersDep = glob.sync([
-      `${config.helpers}/**/*.js`,
-      `${config.data}/**/*.{json,js}`,
-      `${config.decorators}/**/*.js`,
-      `${config.layouts}/**/*.{hbs,handlebars,js}`,
-      `${config.partials}/**/*.{hbs,handlebars,js}`
-    ])
+    const { attributes, body } = frontMatter(code)
+    const { NODE_ENV } = process.env
 
-    helpersDep.forEach(path =>
-      this.addDependency(path, {
-        includedInParent: true
-      })
-    )
-
-    // combine frontmatter data with NODE_ENV variable for use in the template
-    const data = Object.assign({}, frontmatter.attributes, {
-      NODE_ENV: process.env.NODE_ENV
-    })
-
-    // compile template into html markup and assign it to this.contents. super.generate() will use this variable.
-    this.contents = this.wax.compile(frontmatter.body)(data)
-
-    // Return the compiled HTML
-    return super.parse(this.contents)
+    return super.parse(wax.compile(body)({ NODE_ENV, ...attributes }))
   }
 }
 
