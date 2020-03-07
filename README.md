@@ -1,18 +1,9 @@
-# @native_finance/parcel-plugin-handlebars
+# @ninventory/parcel-plugin-handlebars
 
-[![npm](https://img.shields.io/npm/v/@native_finance/parcel-plugin-handlebars.svg)](https://www.npmjs.com/package/@native_finance/parcel-plugin-handlebars)
+[![npm](https://img.shields.io/npm/v/@inventory/parcel-plugin-handlebars.svg)](https://www.npmjs.com/package/@inventory/parcel-plugin-handlebars)
 
-**Update:**
-
-- Updated dependacies removed peer dependacies
-- Fixed parcel watch and cache issue.
-
-```js
-module.exports = {
-  partials: ['src/markup/partials', 'src/markup2/partials'],
-  /* and also data, decorators, helpers, layouts */
-};
-```
+**Originally Forked From:**
+https://github.com/native-finance/parcel-plugin-handlebars#readme
 
 ***
 
@@ -43,11 +34,6 @@ yarn add parcel-plugin-handlebars
 ```
 
 The plugin will process any templated handlebars file extensions (.hbs, .handlebars and .html)
-
-## Examples
-
-- [simple](https://github.com/TheBlackBolt/parcel-plugin-handlebars/tree/master/examples/simple)
-- [advanced](https://github.com/TheBlackBolt/parcel-plugin-handlebars/tree/master/examples/advanced)
 
 ## Configuration
 
