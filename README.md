@@ -51,7 +51,7 @@ module.exports = {
 
 ### Custom Configuration
 
-If you would like to enforce your own folder structure simply create `handlebars.config.js` or `hbs.config.js` in your project root.
+If you would like to enforce your own folder structure simply create `handlebars.config.js` in your project root.
 
 ```js
 module.exports = {

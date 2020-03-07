@@ -22,6 +22,7 @@
   ],
   "main": "index.js",
   "dependencies": {
+    "cosmiconfig": "^6.0.0",
     "front-matter": "^3.0.2",
     "globby": "^10.0.1",
     "handlebars": "^4.2.0",

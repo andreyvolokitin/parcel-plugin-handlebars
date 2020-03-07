@@ -12,33 +12,7 @@ const handlebarsLayouts = require('handlebars-layouts')
 const handlebarsHelpersPackage = require('handlebars-helpers')
 const HTMLAsset = require('parcel-bundler/src/assets/HTMLAsset')
 const glob = require('globby')
-
-// lib
-const { loadUserConfig } = require('./utils')
-
-/* -----------------------------------------------------------------------------
- * configure handlebars/handlebars-wax
- * -------------------------------------------------------------------------- */
-
-const handlebars = Handlebars.create()
-handlebarsHelpersPackage({ handlebars })
-
-const config = {
-  data: 'src/data/**/*.{json,js}',
-  decorators: 'src/decorators/**/*.js',
-  helpers: 'src/helpers/**/*.js',
-  layouts: 'src/layouts/**/*.{hbs,handlebars,js}',
-  partials: 'src/partials/**/*.{hbs,handlebars,js}',
-  ...loadUserConfig()
-}
-
-const wax = handlebarsWax(handlebars)
-  .helpers(handlebarsLayouts)
-  .helpers(config.helpers)
-  .data(config.data)
-  .decorators(config.decorators)
-  .partials(config.layouts)
-  .partials(config.partials)
+const { cosmiconfigSync } = require('cosmiconfig')
 
 /* -----------------------------------------------------------------------------
  * HbsAsset
@@ -52,6 +26,33 @@ class HbsAsset extends HTMLAsset {
   }
 
   parse (code) {
+    const { config: userConfig, filepath: configFilePath } =
+      cosmiconfigSync('handlebars').search() || {}
+
+    if (configFilePath) {
+      this.addDependency(configFilePath, { includedInParent: true })
+    }
+
+    const handlebars = Handlebars.create()
+    handlebarsHelpersPackage({ handlebars })
+
+    const config = {
+      data: 'src/data/**/*.{json,js}',
+      decorators: 'src/decorators/**/*.js',
+      helpers: 'src/helpers/**/*.js',
+      layouts: 'src/layouts/**/*.{hbs,handlebars,js}',
+      partials: 'src/partials/**/*.{hbs,handlebars,js}',
+      ...userConfig
+    }
+
+    const wax = handlebarsWax(handlebars)
+      .helpers(handlebarsLayouts)
+      .helpers(config.helpers)
+      .data(config.data)
+      .decorators(config.decorators)
+      .partials(config.layouts)
+      .partials(config.partials)
+
     glob
       .sync(Object.values(config))
       .forEach(path => this.addDependency(path, { includedInParent: true }))
