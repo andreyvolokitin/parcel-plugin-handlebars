@@ -24,11 +24,11 @@ const handlebars = Handlebars.create()
 handlebarsHelpersPackage({ handlebars })
 
 const config = {
-  data: 'src/markup/data/**/*.{json,js}',
-  decorators: 'src/markup/decorators/**/*.js',
-  helpers: 'src/markup/helpers/**/*.js',
-  layouts: 'src/markup/layouts/**/*.{hbs,handlebars,js}',
-  partials: 'src/markup/partials/**/*.{hbs,handlebars,js}',
+  data: 'src/data/**/*.{json,js}',
+  decorators: 'src/decorators/**/*.js',
+  helpers: 'src/helpers/**/*.js',
+  layouts: 'src/layouts/**/*.{hbs,handlebars,js}',
+  partials: 'src/partials/**/*.{hbs,handlebars,js}',
   ...loadUserConfig()
 }
 
