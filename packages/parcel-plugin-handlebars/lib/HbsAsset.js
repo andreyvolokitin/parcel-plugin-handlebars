@@ -14,7 +14,7 @@ const HTMLAsset = require('parcel-bundler/src/assets/HTMLAsset')
 const glob = require('globby')
 
 // lib
-const { loadUserConfig, parseSimpleLayout } = require('./utils')
+const { loadUserConfig } = require('./utils')
 
 /* -----------------------------------------------------------------------------
  * HbsAsset
@@ -59,18 +59,6 @@ class HbsAsset extends HTMLAsset {
     // process any frontmatter yaml in the template file
     const frontmatter = frontMatter(code)
 
-    // process simple layout mapping that does not use handlebars-layouts. i.e {{!< base}}
-    const { dependencies, content } = parseSimpleLayout(
-      frontmatter.body,
-      config
-    )
-
-    dependencies.forEach(path =>
-      this.addDependency(path, {
-        includedInParent: true
-      })
-    )
-
     const helpersDep = glob.sync([
       `${config.helpers}/**/*.js`,
       `${config.data}/**/*.{json,js}`,
@@ -91,7 +79,7 @@ class HbsAsset extends HTMLAsset {
     })
 
     // compile template into html markup and assign it to this.contents. super.generate() will use this variable.
-    this.contents = this.wax.compile(content)(data)
+    this.contents = this.wax.compile(frontmatter.body)(data)
 
     // Return the compiled HTML
     return super.parse(this.contents)

@@ -40,42 +40,6 @@ function loadUserConfig () {
   return {}
 }
 
-const parseSimpleLayout = (str, opts) => {
-  const layoutPattern = /{{!<\s+([A-Za-z0-9._\-/]+)\s*}}/
-  const matches = str.match(layoutPattern)
-
-  if (matches) {
-    let layout = matches[1]
-
-    if (opts.layouts && layout[0] !== '.') {
-      layout = path.resolve(opts.layouts, layout)
-    }
-
-    const hbsLayout = path.resolve(process.cwd(), `${layout}.hbs`)
-
-    if (fs.existsSync(hbsLayout)) {
-      const content = fs.readFileSync(hbsLayout, { encoding: 'utf-8' })
-      return content.replace('{{{body}}}', {
-        dependencies: [hbsLayout],
-        content: str
-      })
-    }
-
-    const handlebarsLayout = hbsLayout.replace('.hbs', '.handlebars')
-
-    if (fs.existsSync(handlebarsLayout)) {
-      const content = fs.readFileSync(handlebarsLayout, { encoding: 'utf-8' })
-      return content.replace('{{{body}}}', {
-        dependencies: [handlebarsLayout],
-        content: str
-      })
-    }
-  }
-
-  return { dependencies: [], content: str }
-}
-
 module.exports = {
-  loadUserConfig,
-  parseSimpleLayout
+  loadUserConfig
 }
