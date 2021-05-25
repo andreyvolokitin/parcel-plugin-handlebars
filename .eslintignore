@@ -1,6 +1,0 @@
-# Ignore all "built" files
-**/*/dist/**/*
-**/*/docs/**/*
-
-# Ignore all 3rd party
-**/*/node_modules/**/*
