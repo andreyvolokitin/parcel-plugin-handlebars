@@ -50,8 +50,10 @@ class HbsAsset extends HTMLAsset {
       .helpers(config.helpers)
       .data(config.data)
       .decorators(config.decorators)
-      .partials(config.layouts)
-      .partials(config.partials)
+      .partials(config.layouts, config.partialsOptions)
+      .partials(config.partials, config.partialsOptions)
+
+    delete config.partialsOptions;
 
     glob
       .sync(Object.values(config))
