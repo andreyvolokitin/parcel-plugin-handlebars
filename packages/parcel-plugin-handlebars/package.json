@@ -1,15 +1,15 @@
 {
-  "name": "@inventory/parcel-plugin-handlebars",
+  "name": "@parcel-is-buggy/parcel-plugin-handlebars",
   "version": "1.0.0",
   "description": "Parcel plugin to compile handlebars layouts templates.",
   "license": "MIT",
-  "homepage": "https://github.com/jaridmargolin/parcel-plugin-handlebars#readme",
+  "homepage": "https://github.com/andreyvolokitin/parcel-plugin-handlebars#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jaridmargolin/parcel-plugin-handlebars.git"
+    "url": "git+https://github.com/andreyvolokitin/parcel-plugin-handlebars.git"
   },
   "bugs": {
-    "url": "https://github.com/jaridmargolin/parcel-plugin-handlebars/issues"
+    "url": "https://github.com/andreyvolokitin/parcel-plugin-handlebars/issues"
   },
   "keywords": [
     "parcel",
