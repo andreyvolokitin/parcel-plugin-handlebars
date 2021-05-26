@@ -1,5 +1,5 @@
 {
-  "name": "@parcel-is-buggy/parcel-plugin-handlebars",
+  "name": "@my-test-namespace/parcel-transformer-handlebars",
   "version": "1.0.0",
   "description": "Parcel plugin to compile handlebars layouts templates.",
   "license": "MIT",
